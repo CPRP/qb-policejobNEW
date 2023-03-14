@@ -13,7 +13,7 @@ local function UpdateBlips()
     local dutyPlayers = {}
     local players = QBCore.Functions.GetQBPlayers()
     for _, v in pairs(players) do
-        if v and (v.PlayerData.job.name == "police" or v.PlayerData.job.name == "ambulance"  or v.PlayerData.job.name == "bcso") and v.PlayerData.job.onduty then
+        if v and (v.PlayerData.job.name == "police" or v.PlayerData.job.name == "ambulance"  or v.PlayerData.job.name == "bcso" or v.PlayerData.job.name == "sasp" or v.PlayerData.job.name == "sapr") and v.PlayerData.job.onduty then
             local coords = GetEntityCoords(GetPlayerPed(v.PlayerData.source))
             local heading = GetEntityHeading(GetPlayerPed(v.PlayerData.source))
             local ped = GetPlayerPed(v.PlayerData.source)
@@ -37,11 +37,15 @@ local function UpdateBlips()
             end
 
             if v.PlayerData.job.name == "police" then
-                blipColorNum = 3
+                blipColorNum = 38
             elseif v.PlayerData.job.name == "bcso" then
-                blipColorNum = 52
+                blipColorNum = 17
             elseif v.PlayerData.job.name == "ambulance" then
                 blipColorNum = 76
+            elseif v.PlayerData.job.name == "sasp" then
+                blipColorNum = 3
+            elseif v.PlayerData.job.name == "sapr" then
+                blipColorNum = 2
             end
         
             dutyPlayers[#dutyPlayers+1] = {
@@ -654,6 +658,28 @@ QBCore.Functions.CreateCallback('police:server:IsPoliceForcePresent', function(_
     cb(retval)
 end)
 
+-- [[Checks for warrants]] https://discord.com/channels/897744257237000222/1060363334714662962/1060553757282279585
+QBCore.Functions.CreateCallback('qb-policejob:server:GetPlayerWarrants', function(source, cb)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local cid = Player.PlayerData.citizenid
+    local name = Player.PlayerData.charinfo.firstname..' '..Player.PlayerData.charinfo.lastname 
+    local iswanted = false
+    local result = MySQL.query.await('SELECT warrant FROM mdt_convictions WHERE cid = ?', {cid})
+    local reason = MySQL.query.await('SELECT charges FROM mdt_convictions WHERE cid = ?', {cid})
+    for k,v in pairs(result) do
+        print(result[k].warrant)
+        print(reason[k].charges)
+    if result[k].warrant == '1' then
+        iswanted = true
+        reason = reason[k].charges
+    else
+        iswanted = false
+    end
+end
+    cb(iswanted, reason)
+end)
+
 -- Events
 AddEventHandler('onResourceStart', function(resourceName)
     if resourceName == GetCurrentResourceName() then
@@ -807,7 +833,6 @@ RegisterNetEvent('police:server:JailPlayer', function(playerId, time)
     local OtherPlayer = QBCore.Functions.GetPlayer(playerId)
     if not Player or not OtherPlayer or Player.PlayerData.job.type~= "leo" then return end
     local name = OtherPlayer.PlayerData.charinfo.firstname.." "..OtherPlayer.PlayerData.charinfo.lastname
-    exports['futte-newspaper']:CreateJailStory(name, time)
 
     local currentDate = os.date("*t")
     if currentDate.day == 31 then
