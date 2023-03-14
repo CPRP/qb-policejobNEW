@@ -119,7 +119,7 @@ end
 --                SetVehicleNumberPlateText(veh, vehicle.plate)
 --		SetVehicleDirtLevel(veh, 0.0)
 --                SetEntityHeading(veh, coords.w)
---                exports['ps-fuel']:SetFuel(veh, vehicle.fuel)
+--                exports['cdn-fuel']:SetFuel(veh, vehicle.fuel)
 --                doCarDamage(veh, vehicle)
 --                TriggerServerEvent('police:server:TakeOutImpound', vehicle.plate, currentGarage)
 --                closeMenuFull()
@@ -139,7 +139,7 @@ function TakeOutVehicle(vehicleInfo)
             SetCarItemsInfo()
             SetVehicleNumberPlateText(veh, Lang:t('info.police_plate')..tostring(math.random(1000, 9999)))
             SetEntityHeading(veh, coords.w)
-            exports['ps-fuel']:SetFuel(veh, 100.0)
+            exports['cdn-fuel']:SetFuel(veh, 100.0)
             closeMenuFull()
             if Config.VehicleSettings[vehicleInfo] ~= nil then
                 if Config.VehicleSettings[vehicleInfo].extras ~= nil then
@@ -364,7 +364,7 @@ RegisterNetEvent('police:client:ImpoundVehicle', function(fullImpound, price)
     local vehicle = QBCore.Functions.GetClosestVehicle()
     local bodyDamage = math.ceil(GetVehicleBodyHealth(vehicle))
     local engineDamage = math.ceil(GetVehicleEngineHealth(vehicle))
-    local totalFuel = exports['ps-fuel']:GetFuel(vehicle)
+    local totalFuel = exports['cdn-fuel']:GetFuel(vehicle)
     if vehicle ~= 0 and vehicle then
         local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
@@ -545,7 +545,7 @@ RegisterNetEvent('qb-police:client:HelicopterSpawn', function(k)
             SetVehicleMod(veh, 0, 48)
             SetVehicleNumberPlateText(veh, "ZULU"..tostring(math.random(1000, 9999)))
             SetEntityHeading(veh, coords.w)
-            exports['ps-fuel']:SetFuel(veh, 100.0)
+            exports['cdn-fuel']:SetFuel(veh, 100.0)
             closeMenuFull()
             TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
             TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
@@ -756,7 +756,15 @@ if Config.UseTarget then
                         event = "qb-policejob:ToggleDuty",
                         icon = "fas fa-sign-in-alt",
                         label = "Sign In",
-                        job = "police",
+                        job = {
+                            ["police"] = 0,
+                            ["sheriff"] = 0,
+                            ["trooper"] = 0,
+                            ["bcso"] = 0,
+                            ["sasp"] = 0,
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
+                        },
                     },
                 },
                 distance = 4.0
@@ -788,14 +796,22 @@ if Config.UseTarget then
                         event = "qb-police:client:openStash",
                         icon = "fas fa-dungeon",
                         label = "Open Personal Stash",
-                        job = "police",
+                        job = {
+                            ["police"] = 0,
+                            ["sheriff"] = 0,
+                            ["trooper"] = 0,
+                            ["bcso"] = 0,
+                            ["sasp"] = 0,
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
+                        },
                     },
                 },
                 distance = 2.0
             })
         end
 	
-	        -- evidence
+	    -- evidence
         for k, v in pairs(Config.Locations["evidence"]) do
             QBCore.Functions.LoadModel('s_m_y_sheriff_01')
             while not HasModelLoaded('s_m_y_sheriff_01') do
@@ -818,13 +834,17 @@ if Config.UseTarget then
                     {  
                         type = "client",
                         event = "police:client:EvidenceStashDrawer",
-                        targeticon = "fas fa-dungeon",
+                        -- targeticon = "fas fa-dungeon",
                         icon = "fas fa-dungeon",
                         label = "Store Evidence",
                         job = {
                             ["police"] = 0,
                             ["sheriff"] = 0,
                             ["trooper"] = 0,
+                            ["bcso"] = 0,
+                            ["sasp"] = 0,
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
                         },
                     },
                 },
@@ -837,7 +857,7 @@ if Config.UseTarget then
             exports['qb-target']:AddBoxZone("PoliceTrash_"..k, vector3(v.x, v.y, v.z), 1, 1.75, {
                 name = "PoliceTrash_"..k,
                 heading = 11,
-                debugPoly = true,
+                debugPoly = false,
                 minZ = v.z - 1,
                 maxZ = v.z + 1,
             }, {
@@ -847,7 +867,15 @@ if Config.UseTarget then
                         event = "qb-police:client:openTrash",
                         icon = "fas fa-trash",
                         label = "Open Trash",
-                        job = "police",
+                        job = {
+                            ["police"] = 0,
+                            ["sheriff"] = 0,
+                            ["trooper"] = 0,
+                            ["bcso"] = 0,
+                            ["sasp"] = 0,
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
+                        },
                     },
                 },
                 distance = 1.5
@@ -880,7 +908,15 @@ if Config.UseTarget then
                         event = "qb-police:client:scanFingerPrint",
                         icon = "fas fa-fingerprint",
                         label = "Open Fingerprint",
-                        job = "police",
+                        job = {
+                            ["police"] = 0,
+                            ["sheriff"] = 0,
+                            ["trooper"] = 0,
+                            ["bcso"] = 0,
+                            ["sasp"] = 0,
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
+                        },
                     },
                 },
                 distance = 3.0
@@ -911,7 +947,15 @@ if Config.UseTarget then
                         event = "qb-police:client:openArmoury",
                         icon = "fas fa-swords",
                         label = "Open Armory",
-                        job = "police",
+                        job = {
+                            ["police"] = 0,
+                            ["sheriff"] = 0,
+                            ["trooper"] = 0,
+                            ["bcso"] = 0,
+                            ["sasp"] = 0,
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
+                        },
                     },
                 },
                 distance = 4.0
@@ -927,7 +971,7 @@ else
         dutyZones[#dutyZones+1] = BoxZone:Create(
             vector3(vector3(v.x, v.y, v.z)), 1.75, 1, {
             name="box_zone",
-            debugPoly = flase,
+            debugPoly = false,
             minZ = v.z - 1,
             maxZ = v.z + 1,
         })
@@ -956,7 +1000,7 @@ else
         stashZones[#stashZones+1] = BoxZone:Create(
             vector3(vector3(v.x, v.y, v.z)), 1.5, 1.5, {
             name="box_zone",
-            debugPoly = true,
+            debugPoly = false,
             minZ = v.z - 1,
             maxZ = v.z + 1,
         })
@@ -982,7 +1026,7 @@ else
         trashZones[#trashZones+1] = BoxZone:Create(
             vector3(vector3(v.x, v.y, v.z)), 1, 1.75, {
             name="box_zone",
-            debugPoly = true,
+            debugPoly = false,
             minZ = v.z - 1,
             maxZ = v.z + 1,
         })
@@ -1008,7 +1052,7 @@ else
         fingerprintZones[#fingerprintZones+1] = BoxZone:Create(
             vector3(vector3(v.x, v.y, v.z)), 2, 1, {
             name="box_zone",
-            debugPoly = true,
+            debugPoly = false,
             minZ = v.z - 1,
             maxZ = v.z + 1,
         })
@@ -1034,7 +1078,7 @@ else
         armouryZones[#armouryZones+1] = BoxZone:Create(
             vector3(vector3(v.x, v.y, v.z)), 5, 1, {
             name="box_zone",
-            debugPoly = true,
+            debugPoly = false,
             minZ = v.z - 1,
             maxZ = v.z + 1,
         })
@@ -1060,47 +1104,47 @@ end
 
 
 CreateThread(function()
-    -- Evidence Storage
-    local evidenceZones = {}
-    for _, v in pairs(Config.Locations["evidence"]) do
-        evidenceZones[#evidenceZones+1] = BoxZone:Create(
-            vector3(vector3(v.x, v.y, v.z)), 2, 1, {
-            name="box_zone",
-            debugPoly = false,
-            minZ = v.z - 1,
-            maxZ = v.z + 1,
-        })
-    end
+--     -- Evidence Storage
+--     local evidenceZones = {}
+--     for _, v in pairs(Config.Locations["evidence"]) do
+--         evidenceZones[#evidenceZones+1] = BoxZone:Create(
+--             vector3(vector3(v.x, v.y, v.z)), 2, 1, {
+--             name="box_zone",
+--             debugPoly = false,
+--             minZ = v.z - 1,
+--             maxZ = v.z + 1,
+--         })
+--     end
 
 
-    local evidenceCombo = ComboZone:Create(evidenceZones, {name = "evidenceCombo", debugPoly = false})
-    evidenceCombo:onPlayerInOut(function(isPointInside)
-        if isPointInside then
-            if PlayerJob.type == "leo" and PlayerJob.onduty then
-                local currentEvidence = 0
-                local pos = GetEntityCoords(PlayerPedId())
+--     local evidenceCombo = ComboZone:Create(evidenceZones, {name = "evidenceCombo", debugPoly = false})
+--     evidenceCombo:onPlayerInOut(function(isPointInside)
+--         if isPointInside then
+--             if PlayerJob.type == "leo" and PlayerJob.onduty then
+--                 local currentEvidence = 0
+--                 local pos = GetEntityCoords(PlayerPedId())
 
-                for k, v in pairs(Config.Locations["evidence"]) do
-                    if #(pos - v) < 2 then
-                        currentEvidence = k
-                    end
-                end
-                exports['qb-menu']:showHeader({
-                    {
-                        header = Lang:t('info.evidence_stash', {value = currentEvidence}),
-                        params = {
-                            event = 'police:client:EvidenceStashDrawer',
-                            args = {
-                                currentEvidence = currentEvidence
-                            }
-                        }
-                    }
-                })
-            end
-        else
-            exports['qb-menu']:closeMenu()
-        end
-    end)
+--                 for k, v in pairs(Config.Locations["evidence"]) do
+--                     if #(pos - v) < 2 then
+--                         currentEvidence = k
+--                     end
+--                 end
+--                 exports['qb-menu']:showHeader({
+--                     {
+--                         header = Lang:t('info.evidence_stash', {value = currentEvidence}),
+--                         params = {
+--                             event = 'police:client:EvidenceStashDrawer',
+--                             args = {
+--                                 currentEvidence = currentEvidence
+--                             }
+--                         }
+--                     }
+--                 })
+--             end
+--         else
+--             exports['qb-menu']:closeMenu()
+--         end
+--     end)
 
     -- Helicopter
     --local helicopterZones = {}
@@ -1108,7 +1152,7 @@ CreateThread(function()
     --    helicopterZones[#helicopterZones+1] = BoxZone:Create(
     --        vector3(vector3(v.x, v.y, v.z)), 10, 10, {
     --        name="box_zone",
-    --        debugPoly = true,
+    --        debugPoly = false,
     --        minZ = v.z - 1,
     --        maxZ = v.z + 1,
     --    })
@@ -1140,7 +1184,7 @@ CreateThread(function()
 --        impoundZones[#impoundZones+1] = BoxZone:Create(
 --            vector4(v.impound.x, v.impound.y, v.impound.z, v.impound.w), 1, 1, {
 --            name="box_zone",
---            debugPoly = true,
+--            debugPoly = false,
 --            minZ = v.impound.z - 1,
 --            maxZ = v.impound.z + 1,
 --            heading = 180,
@@ -1206,8 +1250,12 @@ CreateThread(function()
                         event = "police:client:VehicleMenuHeader",
                         job = {
                             ["police"] = 0,
+                            ["sheriff"] = 0,
+                            ["trooper"] = 0,
                             ["bcso"] = 0,
                             ["sasp"] = 0,
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
                         },
                         spawn = v.spawn
                     },
@@ -1218,9 +1266,13 @@ CreateThread(function()
                         event  = "qb-policejob:returnveh",
                         job = {
                             ["police"] = 0,
+                            ["sheriff"] = 0,
+                            ["trooper"] = 0,
                             ["bcso"] = 0,
                             ["sasp"] = 0,
-                        }
+                            ["sapr"] = 0,
+                            ["lspd"] = 0,
+                        },
                     }
                 },
                 distance = 4.0
@@ -1307,7 +1359,7 @@ CreateThread(function()
             SetEntityHeading(veh, VehicleSpawnCoord.w)
             SetEntityAsMissionEntity(veh, true, true)
             SetCarItemsInfo()
-            exports['ps-fuel']:SetFuel(veh, 100.0)
+            exports['cdn-fuel']:SetFuel(veh, 100.0)
             TriggerEvent('vehiclekeys:client:SetOwner', QBCore.Functions.GetPlate(veh))
             TriggerServerEvent("inventory:server:addTrunkItems", QBCore.Functions.GetPlate(veh), Config.CarItems)
             TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
@@ -1351,8 +1403,12 @@ CreateThread(function()
                     event = "police:client:ImpoundMenuHeader",
                     job = {
                         ["police"] = 0,
+                        ["sheriff"] = 0,
+                        ["trooper"] = 0,
                         ["bcso"] = 0,
                         ["sasp"] = 0,
+                        ["sapr"] = 0,
+                        ["lspd"] = 0,
                     },
                     vehicle = v.vehicle,
                 }
@@ -1426,7 +1482,7 @@ end
                 SetVehicleNumberPlateText(veh, vehicle.plate)
                 SetVehicleDirtLevel(veh, 0.0)
                 SetEntityHeading(veh, coords.w) 
-                exports['ps-fuel']:SetFuel(veh, vehicle.fuel)
+                exports['cdn-fuel']:SetFuel(veh, vehicle.fuel)
                 doCarDamage(veh, vehicle)
                 TriggerServerEvent('police:server:TakeOutImpound', vehicle.plate, currentGarage)
                 closeMenuFull()
@@ -1460,8 +1516,12 @@ end)
                     event = "qb-police:client:HelicopterSpawn",
                     job = {
                         ["police"] = 0,
+                        ["sheriff"] = 0,
+                        ["trooper"] = 0,
                         ["bcso"] = 0,
                         ["sasp"] = 0,
+                        ["sapr"] = 0,
+                        ["lspd"] = 0,
                     },
                     currentSelection = v,
                 }
@@ -1482,7 +1542,7 @@ RegisterNetEvent('police:client:TakeOutVehicle', function(data)
         SetVehicleNumberPlateText(veh, "ZULU"..tostring(math.random(1000, 9999)))
         SetEntityHeading(veh, VehicleSpawnCoord.w)
         SetVehicleDirtLevel(veh, 0.0)
-        exports['ps-fuel']:SetFuel(veh, 100.0)
+        exports['cdn-fuel']:SetFuel(veh, 100.0)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
         SetVehicleEngineOn(veh, true, true)
@@ -1493,7 +1553,7 @@ end)
 --        garageZones[#garageZones+1] = BoxZone:Create(
 --            vector3(v.x, v.y, v.z), 5, 5, {
 --            name="box_zone",
---            debugPoly = true,
+--            debugPoly = false,
 --            minZ = v.z - 1,
 --            maxZ = v.z + 1,
 --        })
