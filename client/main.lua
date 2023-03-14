@@ -133,7 +133,7 @@ RegisterNetEvent('police:client:sendBillingMail', function(amount)
 end)
 
 RegisterNetEvent('police:client:UpdateBlips', function(players)
-    if PlayerJob and (PlayerJob.name == 'police' or PlayerJob.name == 'ambulance' or PlayerJob.name == 'bcso') and PlayerJob.onduty then 
+    if PlayerJob and (PlayerJob.name == 'police' or PlayerJob.name == 'ambulance' or PlayerJob.name == 'bcso' or PlayerJob.name == 'sasp' or PlayerJob.name == 'sapr') and PlayerJob.onduty then 
         if DutyBlips then
             for _, v in pairs(DutyBlips) do
                 RemoveBlip(v)
@@ -198,8 +198,7 @@ end)
 
 RegisterNetEvent('police:client:SendPoliceEmergencyAlert', function()
     local Player = QBCore.Functions.GetPlayerData()
-    TriggerServerEvent('police:server:policeAlert', Lang:t('info.officer_down', {lastname = Player.charinfo.lastname, callsign = Player.metadata.callsign}))
-    TriggerServerEvent('hospital:server:ambulanceAlert', Lang:t('info.officer_down', {lastname = Player.charinfo.lastname, callsign = Player.metadata.callsign}))
+    exports['ps-dispatch']:OfficerDown()
 end)
 
 -- Threads
@@ -216,18 +215,19 @@ CreateThread(function()
     end
 end)
 
-RegisterNetEvent('qb-policejob:client:checkwarrant', function()
+-- [[Checks for warrants]] https://discord.com/channels/897744257237000222/1060363334714662962/1060553757282279585
+RegisterNetEvent('checkwarrant', function()
     local playerId = GetPlayerServerId(PlayerId())
-    QBCore.Functions.TriggerCallback('police:server:GetPlayerWarrants', function(iswanted, reason)
+    QBCore.Functions.TriggerCallback('qb-policejob:server:GetPlayerWarrants', function(iswanted, reason)
         if iswanted then
-            print("test")
-            exports['okokChatV2']:Message('linear-gradient(90deg, rgba(42, 42, 42, 0.9) 0%, rgba(53, 219, 194, 0.9) 100%)', '#35dbc2', 'fas fa-briefcase', 'Warrant Information', '', 'You have an active warrant!', playerId)
-            --TriggerEvent("chatMessage", "Warrant Information", "warning", "You currently have an active warrant for your arrest regarding "..reason)
+            -- print("test")
+            --exports['okokChatV2']:Message('linear-gradient(90deg, rgba(42, 42, 42, 0.9) 0%, rgba(53, 219, 194, 0.9) 100%)', '#35dbc2', 'fas fa-briefcase', 'Warrant Information', '', 'You have an active warrant!', playerId)
+            TriggerEvent("chatMessage", "Warrant Information", "warning", "You currently have an active warrant for your arrest regarding "..reason)
 
         else
-            print("none")
-            exports['okokChatV2']:Message('linear-gradient(90deg, rgba(42, 42, 42, 0.9) 0%, rgba(53, 219, 194, 0.9) 100%)', '#35dbc2', 'fas fa-briefcase', 'Warrant Information', '', 'You do not have any active warrants!', playerId)        
-            --TriggerEvent("chatMessage", "Warrant Information", "warning", "You do not have any active warrants")
+            -- print("none")
+            --exports['okokChatV2']:Message('linear-gradient(90deg, rgba(42, 42, 42, 0.9) 0%, rgba(53, 219, 194, 0.9) 100%)', '#35dbc2', 'fas fa-briefcase', 'Warrant Information', '', 'You do not have any active warrants!', playerId)        
+            TriggerEvent("chatMessage", "Warrant Information", "warning", "You do not have any active warrants")
         end
      end)
 end)
