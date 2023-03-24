@@ -4,6 +4,7 @@ local inFingerprint = false
 local FingerPrintSessionId = nil
 local inStash = false
 local inTrash = false
+local inEvidence = false --New
 local inArmoury = false
 local inHelicopter = false
 local inImpound = false
@@ -465,36 +466,23 @@ end)
 -- end)
 
 RegisterNetEvent('police:client:EvidenceStashDrawer', function(data)
-    local currentEvidence = data.currentEvidence
-    --local pos = GetEntityCoords(PlayerPedId())
-    local takeLoc = Config.Locations["evidence"][currentEvidence]
-
-    if not takeLoc then return end
-
-    if #(pos - takeLoc) <= 1.0 then
-        local drawer = exports['qb-input']:ShowInput({
-            header = Lang:t('info.evidence_stash', {value = currentEvidence}),
-            submitText = "open",
-            inputs = {
-                {
-                    type = 'number',
-                    isRequired = true,
-                    name = 'slot',
-                    text = Lang:t('info.slot')
-                }
+    local drawer = exports['qb-input']:ShowInput({
+        header = Lang:t('info.evidence_stash'),
+        submitText = "open",
+        inputs = {
+            {
+                type = 'number',
+                isRequired = true,
+                name = 'slot',
+                text = Lang:t('info.slot')
             }
-        })
-        if drawer then
-            if not drawer.slot then return end
-            TriggerServerEvent("inventory:server:OpenInventory", "stash", Lang:t('info.current_evidence', {value = currentEvidence, value2 = drawer.slot}), {
-                maxweight = 4000000,
-                slots = 500,
-            })
-            TriggerEvent("inventory:client:SetCurrentStash", Lang:t('info.current_evidence', {value = currentEvidence, value2 = drawer.slot}))
-        end
-    else
-        exports['qb-menu']:closeMenu()
-    end
+        }
+    })
+    TriggerServerEvent("inventory:server:OpenInventory", "stash", Lang:t('info.current_evidence', {value2 = drawer.slot}), {
+        maxweight = 4000000,
+        slots = 500,
+    })
+    TriggerEvent("inventory:client:SetCurrentStash", Lang:t('info.current_evidence', {value2 = drawer.slot}))
 end)
 
 RegisterNetEvent('qb-policejob:ToggleDuty', function()
@@ -666,6 +654,25 @@ local function armoury()
         end
     end)
 end
+
+-- Evidence Thread
+local function evidence()
+    CreateThread(function()
+        while true do
+            Wait(0)
+            if inEvidence and PlayerJob.type == "leo" then
+                if PlayerJob.onduty then sleep = 5 end
+                if IsControlJustReleased(0, 38) then
+                    TriggerEvent("police:client:EvidenceStashDrawer")
+                    break
+                end
+            else
+                break
+            end
+        end
+    end)
+end
+
 
 -- Helicopter Thread
 local function heli()
