@@ -389,7 +389,7 @@ Config.CarItems = {
 
 Config.Items = {
     label = "Police Armory",
-    slots = 33,
+    slots = 36,
     items = {
         [1] = {
             name = "ifaks",
@@ -692,7 +692,7 @@ Config.Items = {
         [28] = {
             name = "stungun_ammo",
             price = 0,
-            amount = 4,
+            amount = 20,
             info = {},
             type = "item",
             slot = 28,
@@ -736,6 +736,33 @@ Config.Items = {
         },
         [33] = {
             name = "policetablet",
+            price = 0,
+            amount = 20,
+            info = {},
+            type = "item",
+            slot = 33,
+            authorizedJobGrades = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+        },
+        [34] = {
+            name = "megaphone",
+            price = 0,
+            amount = 20,
+            info = {},
+            type = "item",
+            slot = 33,
+            authorizedJobGrades = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+        },
+        [35] = {
+            name = "harness",
+            price = 0,
+            amount = 20,
+            info = {},
+            type = "item",
+            slot = 33,
+            authorizedJobGrades = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+        },
+        [36] = {
+            name = "camera",
             price = 0,
             amount = 20,
             info = {},
