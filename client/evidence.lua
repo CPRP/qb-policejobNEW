@@ -107,13 +107,25 @@ RegisterNetEvent('evidence:client:RemoveBlooddrop', function(bloodId)
     CurrentBlooddrop = 0
 end)
 
-RegisterNetEvent('evidence:client:AddFingerPrint', function(fingerId, fingerprint, coords)
+-- RegisterNetEvent('evidence:client:AddFingerPrint', function(fingerId, fingerprint, coords)
+--     Fingerprints[fingerId] = {
+--         fingerprint = fingerprint,
+--         coords = {
+--             x = coords.x,
+--             y = coords.y,
+--             z = coords.z - 0.9
+--         }
+--     }
+-- end)
+
+RegisterNetEvent('evidence:client:AddFingerPrint', function(fingerId, fingerprint, coords) -- ADDED FOR MZ-STOREROBBERY
+    local pos = GetEntityCoords(PlayerPedId(vector3))
     Fingerprints[fingerId] = {
         fingerprint = fingerprint,
-        coords = {
-            x = coords.x,
-            y = coords.y,
-            z = coords.z - 0.9
+        coords =  {
+            x = pos.x,
+            y = pos.y,
+            z = pos.z - 0.8
         }
     }
 end)
