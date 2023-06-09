@@ -668,8 +668,8 @@ QBCore.Functions.CreateCallback('qb-policejob:server:GetPlayerWarrants', functio
     local result = MySQL.query.await('SELECT warrant FROM mdt_convictions WHERE cid = ?', {cid})
     local reason = MySQL.query.await('SELECT charges FROM mdt_convictions WHERE cid = ?', {cid})
     for k,v in pairs(result) do
-        print(result[k].warrant)
-        print(reason[k].charges)
+        -- print(result[k].warrant)
+        -- print(reason[k].charges)
     if result[k].warrant == '1' then
         iswanted = true
         reason = reason[k].charges
@@ -1187,8 +1187,8 @@ QBCore.Functions.CreateCallback('police:server:GetPlayerWarrants', function(sour
     local result = MySQL.query.await('SELECT warrant FROM mdt_convictions WHERE cid = ?', {cid})
     local reason = MySQL.query.await('SELECT charges FROM mdt_convictions WHERE cid = ?', {cid})
     for k,v in pairs(result) do
-        print(result[k].warrant)
-        print(reason[k].charges)
+        -- print(result[k].warrant)
+        -- print(reason[k].charges)
     if result[k].warrant == '1' then
         iswanted = true
         reason = reason[k].charges
