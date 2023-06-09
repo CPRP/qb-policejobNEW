@@ -35,14 +35,14 @@ Config.Locations = {
         {
             ped = vector4(1542.79, 816.17, 77.66, 86.49),
         },
-        -- LaMesa
-        {
-            ped = vector4(837.12, -1288.65, 28.24, 182.36),
-        },
-        -- Davis
-        {
-            ped = vector4(382.47, -1596.83, 30.05, 55.19),
-        }
+        -- -- LaMesa
+        -- {
+        --     ped = vector4(837.12, -1288.65, 28.24, 182.36),
+        -- },
+        -- -- Davis
+        -- {
+        --     ped = vector4(382.47, -1596.83, 30.05, 55.19),
+        -- }
     },
     -- Following the formula below you can add as many locations as you want coords = where the Ped spawns, spawn = where the vehicle spawns
     ["vehicleped"] = {
@@ -69,14 +69,14 @@ Config.Locations = {
         {
             stash = vector4(1548.6, 826.54, 82.13, 60.32),
         },
-        -- LaMesa
-        {
-            stash = vector4(856.31, -1294.57, 28.24, 7.04),
-        },
-        -- Davis
-        {
-            stash = vector4(370.82, -1591.63, 30.05, 231.18),
-        },
+        -- -- LaMesa
+        -- {
+        --     stash = vector4(856.31, -1294.57, 28.24, 7.04),
+        -- },
+        -- -- Davis
+        -- {
+        --     stash = vector4(370.82, -1591.63, 30.05, 231.18),
+        -- },
         -- Park Ranger
         {
             stash = vector4(386.49, 799.74, 187.46, 175.52),
@@ -143,14 +143,14 @@ Config.Locations = {
         {
             armory = vector4(1550.45, 841.93, 77.65, 201.6),
         },
-        -- LaMesa
-        {
-            armory = vector4(836.38, -1286.35, 28.24, 276.56),
-        },
-        -- Davis
-        {
-            armory = vector4(361.11, -1602.39, 25.45, 298.87),
-        },
+        -- -- LaMesa
+        -- {
+        --     armory = vector4(836.38, -1286.35, 28.24, 276.56),
+        -- },
+        -- -- Davis
+        -- {
+        --     armory = vector4(361.11, -1602.39, 25.45, 298.87),
+        -- },
         -- Park Ranger
         {
             armory = vector4(377.34, 799.44, 187.46, 262.8),
@@ -161,8 +161,8 @@ Config.Locations = {
         [2] = vector3(1839.12, 3677.28, 34.19), --Sandy
         [3] = vector3(-454.57, 6009.38, 27.58), --Paleto
         [4] = vector3(1551.3, 822.35, 77.66), --SASP
-        [5] = vector3(858.42, -1307.18, 28.24), --LaMesa
-        [6] = vector3(376.21, -1609.98, 30.05), --Davis
+        -- [5] = vector3(858.42, -1307.18, 28.24), --LaMesa
+        -- [6] = vector3(376.21, -1609.98, 30.05), --Davis
     },
     ["fingerprint"] = {
         -- MRPD
@@ -181,14 +181,14 @@ Config.Locations = {
         {
             finger = vector4(1555.98, 836.48, 77.66, 284.29),
         },
-        -- LaMesa
-        {
-            finger = vector4(837.94, -1299.8, 28.24, 40.63),
-        },
-        -- Davis
-        {
-            finger = vector4(381.46, -1601.74, 25.45, 96.7),
-        },
+        -- -- LaMesa
+        -- {
+        --     finger = vector4(837.94, -1299.8, 28.24, 40.63),
+        -- },
+        -- -- Davis
+        -- {
+        --     finger = vector4(381.46, -1601.74, 25.45, 96.7),
+        -- },
         -- Park Ranger
         {
             finger = vector4(385.45, 796.41, 187.46, 254.54),
@@ -211,14 +211,14 @@ Config.Locations = {
         {
             evidence = vector4(1546.82, 835.51, 77.66, 277.22),
         },      
-        -- LaMesa
-        { 
-            evidence = vector4(850.68, -1312.66, 28.24, 58.58),
-        },
-        -- Davis
-        { 
-            evidence = vector4(381.86, -1607.95, 30.2, 109.84),
-        },
+        -- -- LaMesa
+        -- { 
+        --     evidence = vector4(850.68, -1312.66, 28.24, 58.58),
+        -- },
+        -- -- Davis
+        -- { 
+        --     evidence = vector4(381.86, -1607.95, 30.2, 109.84),
+        -- },
         -- Park Ranger
         { 
             evidence = vector4(384.87, 799.8, 190.49, 194.57),
@@ -230,8 +230,8 @@ Config.Locations = {
         [3] = {label = "Paleto Bay Sheriffs Office", coords = vector4(-451.55, 6014.25, 31.716, 223.81)},
         [4] = {label = "Blaine County Sheriffs Office", coords = vector4(1853.94, 3685.59, 34.22, 206.54)},
         [5] = {label = "San Andreas Highway Patrol", coords = vector4(1538.23, 819.0, 77.66, 63.26)},
-        [6] = {label = "Davis Police Department", coords = vector4(381.15, -1593.35, 30.05, 320.64)},
-        [7] = {label = "La Mesa Police Department", coords = vector4(827.62, -1289.86, 28.23, 91.86)},
+        -- [6] = {label = "Davis Police Department", coords = vector4(381.15, -1593.35, 30.05, 320.64)},
+        -- [7] = {label = "La Mesa Police Department", coords = vector4(827.62, -1289.86, 28.23, 91.86)},
     },
 }
 
@@ -758,16 +758,25 @@ Config.Items = {
             amount = 20,
             info = {},
             type = "item",
-            slot = 33,
+            slot = 34,
             authorizedJobGrades = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
         },
         [36] = {
+            name = "weapon_bzgas",
+            price = 0,
+            amount = 20,
+            info = {},
+            type = "item",
+            slot = 35,
+            authorizedJobGrades = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+        },
+        [37] = {
             name = "camera",
             price = 0,
             amount = 20,
             info = {},
             type = "item",
-            slot = 33,
+            slot = 36,
             authorizedJobGrades = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
         },
     }
